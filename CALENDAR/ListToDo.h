@@ -2,14 +2,17 @@
 
 #include<iostream>
 #include<string>
-#include<map>
 #include<list>
+#include <vector>
 
 using namespace std;
 
 class ToDoParts
 {
+	
 public:
+	virtual string get() = 0;
+	virtual void set(string st) = 0;
 	virtual string ToString() = 0;
 };
 
@@ -17,128 +20,149 @@ class DateToDo : public ToDoParts
 {
 	string date_;
 public:
-	string getData() { return date_; }
-	string ToString() override
-	{
-		cout << " Введите дату выполнения дела: ";
-		cin >> date_;
-		return date_;
-	}
+	string get() override { return date_; }
+	void set(string st) override { date_ = st; }
+	string ToString() override { return date_; }
+};
+
+class TegToDo : public ToDoParts
+{
+	string teg_;
+public:
+	string get() override { return teg_; }
+	void set(string st) override { teg_ = st; }
+	string ToString() override { return teg_; }
 };
 
 class PriorityToDo : public ToDoParts
 {
 	string priority_;
 public:
-	string ToString() override
-	{
-		cout << " Введите приоритет (время выполнения): ";
-		cin >> priority_;
-		return priority_;
-	}
+	string get() override { return priority_; }
+	void set(string st) override { priority_ = st; }
+	string ToString() override { return priority_; }
 };
 
 class NameToDo : public ToDoParts
 {
 	string name_;
 public:
-	string ToString() override
-	{
-		cout << " Введите наименование дела: ";
-		char buff[1200];
-		cin.getline(buff, 1200);
-		char* name = new char[strlen(buff) + 1];
-		strcpy(name, buff);
-		name_ = name;
-		delete[] name;
-		return name_;
-	}
+	string get() override { return name_; }
+	void set(string st) override { name_ = st; }
+	string ToString() override { return name_; }
 };
 
-class ListToDoBuilder;
 
 class ListToDo
 {
-	list<ToDoParts*> list_to_do_;
-	
-public:
-	list<ToDoParts*> get_list_to_do() { return list_to_do_; }
-	void set_list_to_do(list<ToDoParts*> l) { list_to_do_ = l; }
+	list<vector<ToDoParts*>> list_to_do_;
 
+public:
+
+	ListToDo() {}
+	list<vector<ToDoParts*>> get_list_to_do() { return list_to_do_; }
+	void set_list_to_do(list<vector<ToDoParts*>> l) { list_to_do_ = l; }
+	ListToDo(const ListToDo& obj)
+	{
+		list<vector<ToDoParts*>> list_to;
+		list_to = obj.list_to_do_;
+		list_to_do_ = list_to;
+	}
+	ListToDo& operator=(const ListToDo& obj)
+	{
+		list<vector<ToDoParts*>> list_to;
+		list_to = obj.list_to_do_;
+		list_to_do_ = list_to;
+		return *this;
+	}
 	/*void print()
 	{
-		ListToDoBuilder ltd;
-		auto it = ltd.get_base_to_do().begin();
-		for (; it != ltd.get_base_to_do().end(); it++)
+		system("cls");
+		auto it = list_to_do_.begin();
+		for (; it != list_to_do_.end(); it++)
 		{
-			auto iter = (*it).second.begin();
-			for (; iter != (*it).second.end(); iter++)
-			{
-				cout << (*iter)->ToString();
-			}
+			cout << (*it)->ToString().c_str() << "  ";
 		}
 	}*/
-	
+
 };
 
 class Builder
 {
 public:
-	virtual ~Builder(){}
-	virtual void create_date_to_do() const  = 0;
-	virtual void create_priority_to_do() const = 0;
-	virtual void create_name_to_do() const = 0;
-	virtual void create_base_to_do() = 0;
+	virtual ~Builder() {}
+	virtual void create_date_to_do() = 0;
+	virtual void create_teg_to_do() = 0;
+	virtual void create_priority_to_do() = 0;
+	virtual void create_name_to_do() = 0;
+
 };
 
 class ListToDoBuilder : public Builder
 {
+	vector<ToDoParts*> parts_;
 	ListToDo* list_;
-	map<string, list<ToDoParts*>> base_to_do_;
+	list<vector<ToDoParts*>> list_to;
 public:
-	
+
 	ListToDoBuilder() { reset(); }
-	map<string, list<ToDoParts*>> get_base_to_do(){return base_to_do_;}
+
 	void reset()
 	{
 		if (list_)
 			delete list_;
 		list_ = new ListToDo;
 	}
-	void create_date_to_do() const override
+	void create_date_to_do() override
 	{
-		list_->get_list_to_do().push_back(new DateToDo);
+		DateToDo* date = new DateToDo;
+		string d;
+		cout << " Введите дату выполнения дела: ";
+		cin >> d;
+		date->set(d);
+		parts_.push_back(date);
 	}
-	void create_priority_to_do() const override
+	void create_teg_to_do() override
 	{
-		list_->get_list_to_do().push_back(new PriorityToDo);
+		TegToDo* teg = new TegToDo;
+		string t;
+		cout << " Введите Тег (символ): ";
+		cin >> t;
+		teg->set(t);
+		parts_.push_back(teg);
 	}
-	void create_name_to_do() const override
+	void create_priority_to_do()  override
 	{
-		list_->get_list_to_do().push_back(new NameToDo);
+		PriorityToDo* prior = new PriorityToDo;
+		string p;
+		cout << " Введите приоритет (время выполнения): ";
+		cin >> p;
+		prior->set(p);
+		parts_.push_back(prior);
 	}
+	void create_name_to_do()  override
+	{
+		NameToDo* name_to = new NameToDo;
+		string nm;
+		cin.ignore();
+		cout << " Введите наименование дела: ";
+		char buff[1200];
+		cin.getline(buff, 1200);
+		char* name = new char[strlen(buff) + 1];
+		strcpy(name, buff);
+		nm = name;
+		delete[] name;
+		name_to->set(nm);
+		parts_.push_back(name_to);
+	}
+	
 	ListToDo* get_result()
 	{
+		list_to.push_back(parts_);
+		list_->set_list_to_do(list_to);
 		ListToDo* result = list_;
 		list_ = nullptr;
 		return result;
-	}
-	void create_base_to_do() override
-	{
-		list<ToDoParts*> td = get_result()->get_list_to_do();
-		ToDoParts* tdp;
-		tdp = td.front();
-		string data = get_result()->get_list_to_do().front()->ToString().c_str();
-		if (base_to_do_.count(data))
-		{
-			auto it = base_to_do_.find(data);
-			(*it).second.push_back(tdp);
-		}
-		else
-		{
-			list_->get_list_to_do().push_back(tdp);
-			base_to_do_.insert(make_pair(data, list_->get_list_to_do()));
-		}
 	}
 };
 
@@ -150,8 +174,9 @@ public:
 	void create()
 	{
 		builder->create_date_to_do();
+		builder->create_teg_to_do();
 		builder->create_priority_to_do();
 		builder->create_name_to_do();
-		builder->create_base_to_do();
+
 	}
 };
