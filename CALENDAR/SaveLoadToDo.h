@@ -5,11 +5,10 @@
 #include<string>
 #include<list>
 #include <map>
-#include<iomanip>
 #include <vector>
 #include "SearchToDo.h"
 #include "ChangeToDo.h"
-#include "MenuCalendar.h"
+
 
 using namespace std;
 
@@ -19,12 +18,7 @@ class SaveToDo
 public:
 	void save_to_do(map <string, list<vector<ToDoParts*>>> base)
 	{
-		system("cls");
-		cout << "¬ведите название файла: ";
-		string name;
-		cin >> name;
-		name = name + ".bin";
-		ofstream out(name, ios::binary | ios::out);
+		ofstream out("Base.bin", ios::binary | ios::out);
 		int len_base = base.size();
 		out.write((char*)&len_base, sizeof(int));
 		auto it = base.begin();
@@ -51,24 +45,22 @@ public:
 		cout << "—писок напоминаний календар€ сохранены!!!" << endl;
 		Sleep(2000);
 	}
+
+	
 };
 
 class LoadToDo
 {
-public:
 
-	map <string, list<vector<ToDoParts*>>> load_to_do()
+public:
+	
+	map<string, list<vector<ToDoParts*>>> load_to_do()
 	{
-		system("cls");
-		cout << "¬ведите название файла: ";
-		string name;
-		cin >> name;
-		name = name + ".bin";
-		ifstream in(name, ios::binary | ios::in);
+		ifstream in("Base.bin", ios::binary | ios::in);
 		if (in.is_open())
 		{
-			map <string, list<vector<ToDoParts*>>> base;
-			list<vector<ToDoParts*>> list_;
+			map <string, list<vector<ToDoParts*>>> base;;
+			list<vector<ToDoParts*>> list;
 			vector <ToDoParts*> vec;
 			int len_base;
 			in.read((char*)&len_base, sizeof(int));
@@ -76,65 +68,60 @@ public:
 			{
 				int len_list;
 				in.read((char*)&len_list, sizeof(int));
+				list.clear();
 				for (int j = 0; j < len_list; j++)
 				{
 					int len_vec;
 					in.read((char*)&len_vec, sizeof(int));
-					for (int k=0; k<len_vec; k++)
+					vec.clear();
+					for (int k = 0; k < len_vec; k++)
 					{
+						int len;
+						in.read((char*)&len, sizeof(int));
+						char* buff = new char[len + 1];
+						in.read(buff, len);
+						string d = buff;
 						if (k == 0)
 						{
 							DateToDo* dt = new DateToDo;
-							int len;
-							in.read((char*)&len, sizeof(int));
-							char* buff = new char[len + 1];
-							in.read(buff, len);
-							string d = buff;
 							dt->set(d);
 							vec.push_back(dt);
-							delete buff;
 						}
-						else if(k==1)
+						else if (k == 1)
 						{
 							TegToDo* dt = new TegToDo;
-							int len;
-							in.read((char*)&len, sizeof(int));
-							char* buff = new char[len + 1];
-							in.read(buff, len);
-							string d = buff;
 							dt->set(d);
 							vec.push_back(dt);
-							delete buff;
 						}
-						else if(k==2)
+						else if (k == 2)
 						{
 							PriorityToDo* dt = new PriorityToDo;
-							int len;
-							in.read((char*)&len, sizeof(int));
-							char* buff = new char[len + 1];
-							in.read(buff, len);
-							string d = buff;
 							dt->set(d);
 							vec.push_back(dt);
-							delete buff;
 						}
 						else
 						{
 							NameToDo* dt = new NameToDo;
-							int len;
-							in.read((char*)&len, sizeof(int));
-							char* buff = new char[len + 1];
-							in.read(buff, len);
-							string d = buff;
 							dt->set(d);
 							vec.push_back(dt);
-							delete buff;
 						}
-
+						delete buff;
 					}
-					list_.push_back(vec);
+					list.push_back(vec);
 				}
-				base.insert(make_pair(list_.front().front()->get().c_str(), list_));
+				if (base.empty())
+					base.insert(make_pair(list.front().front()->get().c_str(), list));
+				else if (!base.empty())
+				{
+					string key = list.front().front()->ToString().c_str();
+					if (base.count(key))
+					{
+						auto it = base.find(key);
+						(*it).second.push_back(list.front());
+					}
+					else
+						base.insert(make_pair(list.front().front()->get().c_str(), list));
+				}
 			}
 			in.close();
 			return base;
@@ -143,7 +130,9 @@ public:
 		{
 			cout << "‘айл не найден!!!" << endl;
 			Sleep(2000);
+			exit(0);
 		}
 
 	}
+	
 };

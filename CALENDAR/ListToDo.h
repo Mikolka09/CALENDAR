@@ -75,15 +75,19 @@ public:
 		list_to_do_ = list_to;
 		return *this;
 	}
-	/*void print()
+	void print()
 	{
 		system("cls");
 		auto it = list_to_do_.begin();
 		for (; it != list_to_do_.end(); it++)
 		{
-			cout << (*it)->ToString().c_str() << "  ";
+			auto it2 = (*it).begin();
+			for(; it2!=(*it).end(); it2++)
+			{
+				cout << (*it2)->ToString() << "  ";
+			}
 		}
-	}*/
+	}
 
 };
 
