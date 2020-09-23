@@ -16,7 +16,7 @@ class SaveToDo
 {
 
 public:
-	void save_to_do(map <string, list<vector<ToDoParts*>>> base)
+	void static save_to_do(map <string, list<vector<ToDoParts*>>> base)
 	{
 		ofstream out("Base.bin", ios::binary | ios::out);
 		int len_base = base.size();

@@ -47,7 +47,17 @@ public:
 			if (base_to_do_.count(key))
 			{
 				auto it = base_to_do_.find(key);
-				(*it).second.push_back(list_->get_list_to_do().front());
+				auto it2 = (*it).second.begin();
+				auto it3 = (*it2).begin();
+				if ((*it3)->ToString()[2] != list_->get_list_to_do().front().front()->ToString()[2])
+					(*it).second.push_back(list_->get_list_to_do().front());
+				else
+				{
+					system("cls");
+					cout << endl;
+					cout << "Такое Приоритет уже установлен! Попробуйте еще раз!" << endl;
+					Sleep(2000);
+				}
 			}
 			else
 				base_to_do_.insert(make_pair(key, list_->get_list_to_do()));
@@ -166,7 +176,6 @@ class ChangeToDo
 public:
 	void change_to_do()
 	{
-		cr.load_to_do();
 		ch.change_to(base_to_do_);
 		cr.save_to_do();
 	}
@@ -191,6 +200,7 @@ public:
 	{
 		while (true)
 		{
+			create_to_do_->load_to_do();
 			system("cls");
 			cout << "МЕНЮ КАЛЕНДАРЯ\n" << endl;
 			cout << "1. Создание напоминания\n" << "2. Изменение напоминания\n"

@@ -104,7 +104,7 @@ public:
 		system("cls");
 		string S(80, '=');
 		cout << "\n" << endl;
-		cout << "Введите Тег(формат: символ): ";
+		cout << "Введите Тег(формат: важное, неважное): ";
 		string date;
 		cin >> date;
 		shapka();
