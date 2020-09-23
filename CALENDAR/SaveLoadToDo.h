@@ -59,7 +59,7 @@ public:
 		ifstream in("Base.bin", ios::binary | ios::in);
 		if (in.is_open())
 		{
-			map <string, list<vector<ToDoParts*>>> base;;
+			map <string, list<vector<ToDoParts*>>> base;
 			list<vector<ToDoParts*>> list;
 			vector <ToDoParts*> vec;
 			int len_base;
@@ -130,7 +130,9 @@ public:
 		{
 			cout << "Файл не найден!!!" << endl;
 			Sleep(2000);
-			exit(0);
+			map <string, list<vector<ToDoParts*>>> base;
+			return base;
+			//exit(0);
 		}
 
 	}

@@ -121,7 +121,7 @@ public:
 	{
 		DateToDo* date = new DateToDo;
 		string d;
-		cout << " Введите дату выполнения дела: ";
+		cout << "Введите дату выполнения дела: ";
 		cin >> d;
 		date->set(d);
 		parts_.push_back(date);
@@ -130,7 +130,7 @@ public:
 	{
 		TegToDo* teg = new TegToDo;
 		string t;
-		cout << " Введите Тег (символ): ";
+		cout << "Введите Тег (символ): ";
 		cin >> t;
 		teg->set(t);
 		parts_.push_back(teg);
@@ -139,7 +139,7 @@ public:
 	{
 		PriorityToDo* prior = new PriorityToDo;
 		string p;
-		cout << " Введите приоритет (время выполнения): ";
+		cout << "Введите приоритет (время выполнения): ";
 		cin >> p;
 		prior->set(p);
 		parts_.push_back(prior);
@@ -149,7 +149,7 @@ public:
 		NameToDo* name_to = new NameToDo;
 		string nm;
 		cin.ignore();
-		cout << " Введите наименование дела: ";
+		cout << "Введите наименование дела: ";
 		char buff[1200];
 		cin.getline(buff, 1200);
 		char* name = new char[strlen(buff) + 1];

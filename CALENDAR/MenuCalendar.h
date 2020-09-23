@@ -21,16 +21,19 @@ class CreateToDo
 	ListToDo* list_;
 	SaveToDo save_;
 	LoadToDo load_;
-	
+
 public:
-	
+
 	map <string, list<vector<ToDoParts*>>> get_base_to_do() { return base_to_do_; }
 	void set_base_to_do(map <string, list<vector<ToDoParts*>>> base) { base_to_do_ = base; }
-	
+
 	void create_to_do()
 	{
-		load_to_do();
+		if (!base_to_do_.empty())
+			load_to_do();
 		system("cls");
+		cout << endl;
+		cout << "\tÑÎÇÄÀÍÈÅ ÍÀÏÎÌÈÍÀÍÈß\n" << endl;
 		create_ = new Create;
 		ltd_ = new ListToDoBuilder;
 		create_->set_builder(ltd_);
@@ -161,10 +164,11 @@ class ChangeToDo
 	ChangeTo ch;
 	CreateToDo cr;
 public:
-	void change_to()
+	void change_to_do()
 	{
 		cr.load_to_do();
 		ch.change_to(base_to_do_);
+		cr.save_to_do();
 	}
 };
 
@@ -200,7 +204,7 @@ public:
 				create_to_do_->create_to_do();
 				break;
 			case 2:
-				change_to_do_->change_to();
+				change_to_do_->change_to_do();
 				break;
 			case 3:
 				search_to_do_->search_to();
