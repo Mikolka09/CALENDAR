@@ -1,9 +1,6 @@
 #pragma once
 
-#include<iostream>
-#include<string>
-#include<list>
-#include <vector>
+#include "Function.h"
 
 using namespace std;
 
@@ -121,6 +118,7 @@ public:
 	{
 		DateToDo* date = new DateToDo;
 		string d;
+		gotoxy(5, 6);
 		cout << "Введите Дату выполнения Дела: ";
 		cin >> d;
 		date->set(d);
@@ -130,6 +128,7 @@ public:
 	{
 		TegToDo* teg = new TegToDo;
 		string t;
+		gotoxy(5, 7);
 		cout << "Введите ТЕГ (важное, неважное): ";
 		cin >> t;
 		teg->set(t);
@@ -139,7 +138,8 @@ public:
 	{
 		PriorityToDo* prior = new PriorityToDo;
 		string p;
-		cout << "Введите Приоритет (время выполнения): ";
+		gotoxy(5, 8);
+		cout << "Введите Приоритет (формат времени: чч.мм): ";
 		cin >> p;
 		prior->set(p);
 		parts_.push_back(prior);
@@ -148,6 +148,7 @@ public:
 	{
 		NameToDo* name_to = new NameToDo;
 		string nm;
+		gotoxy(5, 9);
 		cin.ignore();
 		cout << "Введите наименование Дела: ";
 		char buff[1200];

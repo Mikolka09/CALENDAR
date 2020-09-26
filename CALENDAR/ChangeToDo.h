@@ -1,13 +1,6 @@
 #pragma once
 
-#include<iostream>
-#include<string>
-#include<list>
-#include <map>
-#include <iomanip>
-
-
-using namespace std;
+#include "Function.h"
 
 class ChangeTo
 {
@@ -16,11 +9,17 @@ public:
 	map <string, list<vector<ToDoParts*>>> change_to(map <string, list<vector<ToDoParts*>>>& base)
 	{
 		system("cls");
+		draw();
+		gotoxy(10, 5);
+		SetColor(12, 0);
 		cout << "РЕДАКТОР НАПОМИНАНИЙ:\n" << endl;
-		cout << "1. Редактировать Дату\n" << "2. Редактировать ТЕГА\n" << "3. Редактировать Приоритет(время)\n"
-			<< "4. Редактировать текст Напоминания\n" << "5. Удаление напоминания\n" << endl;
-		cout << "Ваш выбор: ";
+		SetColor(9, 0);
+		cout << "\t1. Редактировать Дату\n" << "\t2. Редактировать ТЕГА\n" << "\t3. Редактировать Приоритет(время)\n"
+			<< "\t4. Редактировать текст Напоминания\n" << "\t5. Удаление напоминания\n" << endl;
+		SetColor(12, 0);
+		cout << "\tВаш выбор: ";
 		int var;
+		SetColor(15, 0);
 		cin >> var;
 		switch (var)
 		{
@@ -49,9 +48,13 @@ public:
 	void static print(map <string, list<vector<ToDoParts*>>> base)
 	{
 		system("cls");
+		draw();
 		string S(80, '=');
+		string D(80, '-');
 		cout << "\n\n";
+		SetColor(12, 0);
 		cout << "\t\t\t\tСПИСОК НАПОМИНАНИЙ" << endl;
+		SetColor(11, 0);
 		cout << S << endl;
 		cout << setw(15) << "ДАТА" << "    =" << setw(15) << "ТЕГ" << "    =" << setw(15)
 			<< "ВРЕМЯ НАПОМ." << "    =" << setw(15) << "НАПОМИНАНИЕ" << "    =" << endl;
@@ -69,29 +72,36 @@ public:
 				}
 				cout << endl;
 			}
+			cout << D << endl;
 		}
-		cout << S << endl << endl;
+		cout << endl << endl;
+		SetColor(15, 0);
 	}
 
 	map <string, list<vector<ToDoParts*>>> changeToDate(map <string, list<vector<ToDoParts*>>>& base)
 	{
 		print(base);
 		cout << "\n";
-		cout << "Выберите дату напоминания для редактирования: ";
+		SetColor(9, 0);
+		cout << "\tВыберите дату напоминания для редактирования: ";
 		string date;
+		SetColor(15, 0);
 		cin >> date;
 		if (!base.count(date))
 		{
 			cout << endl;
-			cout << "Такой Даты НЕТ!!! Попробуйте еще раз!" << endl;
+			SetColor(12, 0);
+			cout << "\tТакой Даты НЕТ!!! Попробуйте еще раз!" << endl;
 			Sleep(2000);
 			return base;
 		}
 		else
 		{
 			cout << "\n" << endl;
-			cout << "Введите нову дату: ";
+			SetColor(9, 0);
+			cout << "\tВведите нову дату (формат: дд.мм.гггг): ";
 			string new_date;
+			SetColor(15, 0);
 			cin >> new_date;
 			auto it = base.find(date);
 			if (it != base.cend())
@@ -110,20 +120,19 @@ public:
 			}
 			else
 			{
-				int i = 1;
 				auto it = (*iter).second.begin();
-				while (i != (*iter).second.size() + 1)
+				for (; it != (*iter).second.end(); it++)
 				{
-					advance(it, (i - 1));
 					(*it)[0]->set(new_date);
-					i++;
 				}
 			}
 			cout << "\n" << endl;
-			cout << "Дата напоминания изменена!!!" << endl;
+			SetColor(15, 0);
+			cout << "\tДата напоминания изменена!!!" << endl;
 			Sleep(2000);
 			system("cls");
 			print(base);
+			SetColor(15, 0);
 			Sleep(4000);
 			return base;
 		}
@@ -133,21 +142,26 @@ public:
 	{
 		print(base);
 		cout << "\n";
-		cout << "Выберите дату напоминания для редактирования ТЕГА: ";
+		SetColor(9, 0);
+		cout << "\tВыберите дату напоминания для редактирования ТЕГА: ";
 		string date;
+		SetColor(15, 0);
 		cin >> date;
 		if (!base.count(date))
 		{
 			cout << endl;
-			cout << "Такой Даты НЕТ!!! Попробуйте еще раз!" << endl;
+			SetColor(12, 0);
+			cout << "\tТакой Даты НЕТ!!! Попробуйте еще раз!" << endl;
 			Sleep(2000);
 			return base;
 		}
 		else
 		{
 			cout << "\n" << endl;
-			cout << "Введите новый ТЕГ (важное, неважное): ";
+			SetColor(9, 0);
+			cout << "\tВведите новый ТЕГ (важное, неважное): ";
 			string new_teg;
+			SetColor(15, 0);
 			cin >> new_teg;
 			auto iter = base.find(date);
 			auto it2 = (*iter).second.begin();
@@ -158,39 +172,34 @@ public:
 				{
 					advance(it3, 1);
 					(*it3)->set(new_teg);
-				}
 
+				}
 			}
 			else
 			{
 				cout << "\n" << endl;
-				cout << "Укажите Приоритет (время) для изменения ТЕГА (важное, неважное): ";
+				SetColor(9, 0);
+				cout << "\tУкажите Приоритет (время) для изменения ТЕГА (важное, неважное): ";
 				string prio;
+				SetColor(15, 0);
 				cin >> prio;
-				int i = 1;
 				auto it = (*iter).second.begin();
-				while (i != (*iter).second.size() + 1)
+				for (; it != (*iter).second.end(); it++)
 				{
-					advance(it, (i - 1));
-					auto it3 = (*it).begin();
-					if ((*it3)->get() == date)
+					if ((*it)[0]->get() == date)
 					{
-						advance(it3, 2);
-						if ((*it3)->get() == prio)
-						{
-							advance(it3, -1);
-							(*it3)->set(new_teg);
-						}
-
+						if ((*it)[2]->get() == prio)
+							(*it)[1]->set(new_teg);
 					}
-					i++;
 				}
 			}
 			cout << "\n" << endl;
-			cout << "ТЕГ напоминания изменен!!!" << endl;
+			SetColor(12, 0);
+			cout << "\tТЕГ напоминания изменен!!!" << endl;
 			Sleep(2000);
 			system("cls");
 			print(base);
+			SetColor(15, 0);
 			Sleep(4000);
 			return base;
 		}
@@ -200,21 +209,26 @@ public:
 	{
 		print(base);
 		cout << "\n";
-		cout << "Выберите дату напоминания для редактирования Приоритета (времени): ";
+		SetColor(9, 0);
+		cout << "\tВыберите дату напоминания для редактирования Приоритета (времени): ";
 		string date;
+		SetColor(15, 0);
 		cin >> date;
 		if (!base.count(date))
 		{
 			cout << endl;
-			cout << "Такой Даты НЕТ!!! Попробуйте еще раз!" << endl;
+			SetColor(12, 0);
+			cout << "\tТакой Даты НЕТ!!! Попробуйте еще раз!" << endl;
 			Sleep(2000);
 			return base;
 		}
 		else
 		{
 			cout << "\n" << endl;
-			cout << "Введите новый Приоритет (время): ";
+			SetColor(9, 0);
+			cout << "\tВведите новый Приоритет (формат времени: чч.мм): ";
 			string new_p;
+			SetColor(15, 0);
 			cin >> new_p;
 			auto iter = base.find(date);
 			auto it2 = (*iter).second.begin();
@@ -231,29 +245,28 @@ public:
 			else
 			{
 				cout << "\n" << endl;
-				cout << "Укажите Приоритет (время), который требуется заменить: ";
+				SetColor(9, 0);
+				cout << "\tУкажите Приоритет (время), который требуется заменить: ";
 				string prio;
+				SetColor(15, 0);
 				cin >> prio;
-				int i = 1;
 				auto it = (*iter).second.begin();
-				while (i != (*iter).second.size() + 1)
+				for (; it != (*iter).second.end(); it++)
 				{
-					advance(it, (i - 1));
-					auto it3 = (*it).begin();
-					if ((*it3)->get() == date)
+					if ((*it)[0]->get() == date)
 					{
-						advance(it3, 2);
-						if ((*it3)->get() == prio)
-							(*it3)->set(new_p);
+						if ((*it)[2]->get() == prio)
+							(*it)[2]->set(new_p);
 					}
-					i++;
 				}
 			}
 			cout << "\n" << endl;
-			cout << "Приоритет напоминания изменен!!!" << endl;
+			SetColor(12, 0);
+			cout << "\tПриоритет напоминания изменен!!!" << endl;
 			Sleep(2000);
 			system("cls");
 			print(base);
+			SetColor(15, 0);
 			Sleep(4000);
 			return base;
 		}
@@ -263,13 +276,16 @@ public:
 	{
 		print(base);
 		cout << "\n";
-		cout << "Выберите дату напоминания для редактирования текста Напоминания: ";
+		SetColor(9, 0);
+		cout << "\tВыберите дату напоминания для редактирования текста Напоминания: ";
 		string date;
+		SetColor(15, 0);
 		cin >> date;
 		if (!base.count(date))
 		{
 			cout << endl;
-			cout << "Такой Даты НЕТ!!! Попробуйте еще раз!" << endl;
+			SetColor(12, 0);
+			cout << "\tакой Даты НЕТ!!! Попробуйте еще раз!" << endl;
 			Sleep(2000);
 			return base;
 		}
@@ -277,9 +293,11 @@ public:
 		{
 			cout << "\n" << endl;
 			cin.ignore();
-			cout << "Введите новый текст Напоминания: ";
+			SetColor(9, 0);
+			cout << "\tВведите новый текст Напоминания: ";
 			string new_n;
 			char buff[1200];
+			SetColor(15, 0);
 			cin.getline(buff, 1200);
 			char* name = new char[strlen(buff) + 1];
 			strcpy(name, buff);
@@ -300,33 +318,29 @@ public:
 			else
 			{
 				cout << "\n" << endl;
-				cout << "Укажите Приоритет (время) для изменения текста Напоминания: ";
+				SetColor(9, 0);
+				cout << "\tУкажите Приоритет (время) для изменения текста Напоминания: ";
 				string prio;
+				SetColor(15, 0);
 				cin >> prio;
-				int i = 1;
 				auto it = (*iter).second.begin();
-				while (i != (*iter).second.size() + 1)
-				{
-					advance(it, (i - 1));
-					auto it3 = (*it).begin();
-					if ((*it3)->get() == date)
-					{
-						advance(it3, 2);
-						if ((*it3)->get() == prio)
-						{
-							advance(it3, 1);
-							(*it3)->set(new_n);
-						}
 
+				for (; it != (*iter).second.end(); it++)
+				{
+					if ((*it)[0]->get() == date)
+					{
+						if ((*it)[2]->get() == prio)
+							(*it)[3]->set(new_n);
 					}
-					i++;
 				}
 			}
 			cout << "\n" << endl;
-			cout << "Текст напоминания изменен!!!" << endl;
+			SetColor(12, 0);
+			cout << "\tТекст напоминания изменен!!!" << endl;
 			Sleep(2000);
 			system("cls");
 			print(base);
+			SetColor(15, 0);
 			Sleep(4000);
 			return base;
 		}
@@ -336,13 +350,16 @@ public:
 	{
 		print(base);
 		cout << "\n";
-		cout << "Выберите дату напоминания для Удаления: ";
+		SetColor(9, 0);
+		cout << "\tВыберите дату напоминания для Удаления: ";
 		string date;
+		SetColor(15, 0);
 		cin >> date;
 		if (!base.count(date))
 		{
 			cout << endl;
-			cout << "Такой Даты НЕТ!!! Попробуйте еще раз!" << endl;
+			SetColor(12, 0);
+			cout << "\tТакой Даты НЕТ!!! Попробуйте еще раз!" << endl;
 			Sleep(2000);
 			return base;
 		}
@@ -355,37 +372,37 @@ public:
 			else
 			{
 				cout << "\n" << endl;
-				cout << "Укажите Приоритет (время) для Удаления напоминания: ";
-				string prio, new_date;
+				SetColor(9, 0);
+				cout << "\tУкажите Приоритет (время) для Удаления напоминания: ";
+				string prio;
+				SetColor(15, 0);
 				cin >> prio;
-				int i = 1;
-				new_date = date;
 				auto it = (*iter).second.begin();
-				while (i != (*iter).second.size() + 1)
+				for (; it != (*iter).second.end(); it++)
 				{
-					advance(it, (i - 1));
-					auto it3 = (*it).begin();
-					if ((*it3)->get() == date)
+					if ((*it)[0]->get() == date)
 					{
-						advance(it3, 2);
-						if ((*it3)->get() == prio)
+						if ((*it)[2]->get() == prio)
 						{
 							if (it != (*iter).second.end())
 							{
-								(*iter).second.erase(it);
-								i--;
+								it = (*iter).second.erase(it);
+								if (it == (*iter).second.end())
+									advance(it, -1);
 							}
-
+							
 						}
 					}
-					i++;
+					
 				}
 			}
 			cout << "\n" << endl;
-			cout << "Напоминание удалено!!!" << endl;
+			SetColor(12, 0);
+			cout << "\tНапоминание удалено!!!" << endl;
 			Sleep(2000);
 			system("cls");
 			print(base);
+			SetColor(15, 0);
 			Sleep(4000);
 			return base;
 		}

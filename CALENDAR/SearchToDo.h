@@ -1,12 +1,6 @@
 #pragma once
 
-#include<iostream>
-#include<string>
-#include<list>
-#include <map>
-#include <iomanip>
-
-using namespace std;
+#include "Function.h"
 
 class SearchTo
 {
@@ -15,10 +9,16 @@ public:
 	void searchToBase(map <string, list<vector<ToDoParts*>>> base)
 	{
 		system("cls");
+		draw();
+		gotoxy(10, 5);
+		SetColor(12, 0);
 		cout << "ПОИСК ПО БАЗЕ НАПОМИНАНИЙ:\n" << endl;
-		cout << "1. Поиск по Дате\n" << "2. Поиск по Тег\n" << "3. Поиск по Приоритету(время)\n" << "4. Выход\n" << endl;
-		cout << "Ваш выбор: ";
+		SetColor(9, 0);
+		cout << "\t1. Поиск по Дате\n" << "\t2. Поиск по ТЕГ\n" << "\t3. Поиск по Приоритету(время)\n" << "\t4. Выход\n" << endl;
+		SetColor(12, 0);
+		cout << "\tВаш выбор: ";
 		int var;
+		SetColor(15, 0);
 		cin >> var;
 		switch (var)
 		{
@@ -43,9 +43,12 @@ public:
 	void shapka()
 	{
 		system("cls");
+		draw();
 		string S(80, '=');
 		cout << "\n\n";
+		SetColor(12, 0);
 		cout << "\t\t\t\tСПИСОК НАПОМИНАНИЙ" << endl;
+		SetColor(11, 0);
 		cout << S << endl;
 		cout << setw(15) << "ДАТА" << "    =" << setw(15) << "ТЕГ" << "    =" << setw(15)
 			<< "ВРЕМЯ НАПОМ." << "    =" << setw(15) << "НАПОМИНАНИЕ" << "    =" << endl;
@@ -55,10 +58,13 @@ public:
 	void searchToDate(map <string, list<vector<ToDoParts*>>> base)
 	{
 		system("cls");
+		draw();
 		string S(80, '=');
 		cout << "\n" << endl;
-		cout << "Введите дату(формат: дд.мм.гггг): ";
+		SetColor(9, 0);
+		cout << "\tВведите дату(формат: дд.мм.гггг): ";
 		string date;
+		SetColor(15, 0);
 		cin >> date;
 		if (base.count(date))
 		{
@@ -79,7 +85,8 @@ public:
 						cout << endl;
 					}
 				}
-				cout << S << endl;
+				cout << S << endl << endl;
+				SetColor(15, 0);
 			}
 			else
 			{
@@ -94,18 +101,22 @@ public:
 					}
 					cout << endl;
 				}
-				cout << S << endl;
+				cout << S << endl << endl;
 			}
+			SetColor(15, 0);
 		}
 	}
 
 	void searchToTeg(map <string, list<vector<ToDoParts*>>> base)
 	{
 		system("cls");
+		draw();
 		string S(80, '=');
 		cout << "\n" << endl;
-		cout << "Введите Тег(формат: важное, неважное): ";
+		SetColor(9, 0);
+		cout << "\tВведите ТЕГ(формат: важное, неважное): ";
 		string date;
+		SetColor(15, 0);
 		cin >> date;
 		shapka();
 		auto it = base.begin();
@@ -129,16 +140,20 @@ public:
 				}
 			}
 		}
-		cout << S << endl;
+		cout << S << endl << endl;
+		SetColor(15, 0);
 	}
 
 	void searchToPriority(map <string, list<vector<ToDoParts*>>> base)
 	{
 		system("cls");
+		draw();
 		string S(80, '=');
 		cout << "\n" << endl;
-		cout << "Введите Приоритет(формат времени: чч.мм): ";
+		SetColor(9, 0);
+		cout << "\tВведите Приоритет(формат времени: чч.мм): ";
 		string date;
+		SetColor(15, 0);
 		cin >> date;
 		shapka();
 		auto it = base.begin();
@@ -162,7 +177,8 @@ public:
 				}
 			}
 		}
-		cout << S << endl;
+		cout << S << endl << endl;
+		SetColor(15, 0);
 	}
 
 };

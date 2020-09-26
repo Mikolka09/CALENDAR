@@ -1,16 +1,11 @@
 #pragma once
 
-#include<iostream>
-#include<string>
-#include<list>
-#include <map>
-#include <iomanip>
+
 #include "ListToDo.h"
 #include "SaveLoadToDo.h"
 #include "SearchToDo.h"
 #include "ChangeToDo.h"
-
-using namespace std;
+#include "Function.h"
 
 static map <string, list<vector<ToDoParts*>>> base_to_do_;
 
@@ -32,8 +27,12 @@ public:
 		if (!base_to_do_.empty())
 			load_to_do();
 		system("cls");
+		draw();
 		cout << endl;
+		gotoxy(10, 4);
+		SetColor(12, 0);
 		cout << "\tСОЗДАНИЕ НАПОМИНАНИЯ\n" << endl;
+		SetColor(9, 0);
 		create_ = new Create;
 		ltd_ = new ListToDoBuilder;
 		create_->set_builder(ltd_);
@@ -47,21 +46,43 @@ public:
 			if (base_to_do_.count(key))
 			{
 				auto it = base_to_do_.find(key);
-				auto it2 = (*it).second.begin();
-				auto it3 = (*it2).begin();
-				if ((*it3)->ToString()[2] != list_->get_list_to_do().front().front()->ToString()[2])
-					(*it).second.push_back(list_->get_list_to_do().front());
-				else
+				bool good = true;
+				while (good)
 				{
-					system("cls");
-					cout << endl;
-					cout << "Такое Приоритет уже установлен! Попробуйте еще раз!" << endl;
-					Sleep(2000);
+					int count = 0;
+					auto it2 = (*it).second.begin();
+					for (; it2 != (*it).second.end(); it2++)
+					{
+						if ((*it2)[2]->get() == list_->get_list_to_do().front()[2]->get())
+							count++;
+					}
+					if (count > 0)
+					{
+						system("cls");
+						cout << "\n\n" << endl;
+						SetColor(12, 0);
+						cout << "\tТакое Приоритет уже установлен! Попробуйте еще раз!" << endl;
+						Sleep(2000);
+						system("cls");
+						string p;
+						cout << "\n\n" << endl;
+						SetColor(9, 0);
+						cout << "\tВведите новый Приоритет (формат времени: чч.мм): ";
+						cin >> p;
+						list_->get_list_to_do().front()[2]->set(p);
+						good = true;
+					}
+					else if (count == 0)
+					{
+						(*it).second.push_back(list_->get_list_to_do().front());
+						good = false;
+					}
 				}
 			}
 			else
 				base_to_do_.insert(make_pair(key, list_->get_list_to_do()));
 		}
+		sort_base(base_to_do_);
 		save_to_do();
 	}
 	void save_to_do()
@@ -72,9 +93,30 @@ public:
 	{
 		base_to_do_ = load_.load_to_do();
 	}
+	void sort_base(map <string, list<vector<ToDoParts*>>>& base)
+	{
+		auto it = base.begin();
+		for (; it != base.end(); it++)
+		{
+			auto it2 = (*it).second.begin();
+			if ((*it).second.size() > 1)
+			{
+				for (; it2 != (*it).second.end(); it2++)
+				{
+					for (auto it3 = it2; it3 != (*it).second.end(); it3++)
+					{
+						if ((*it2).at(2)->get() > (*it3).at(2)->get())
+							iter_swap(it2, it3);
+					}
+				}
+			}
+		}
+	}
 	void print()
 	{
 		load_to_do();
+		sort_base(base_to_do_);
+		string D(80, '-');
 		auto it = base_to_do_.begin();
 		for (; it != base_to_do_.end(); it++)
 		{
@@ -88,16 +130,21 @@ public:
 				}
 				cout << endl;
 			}
+			cout << D << endl;
 		}
-		string S(80, '=');
-		cout << S << endl << endl;
+		SetColor(15, 0);
+		cout << endl;
 	}
 	void print_file()
 	{
 		load_to_do();
 		system("cls");
-		cout << "Введите имя файла: ";
+		draw();
+		cout << "\n\n" << endl;
+		SetColor(9, 0);
+		cout << "\tВведите имя файла: ";
 		string name;
+		SetColor(15, 0);
 		cin >> name;
 		name += ".txt";
 		ofstream out(name, ios::out);
@@ -108,6 +155,7 @@ public:
 		out << setw(15) << "ДАТА" << "    =" << setw(15) << "ТЕГ" << "    =" << setw(15)
 			<< "ВРЕМЯ НАПОМ." << "    =" << setw(15) << "НАПОМИНАНИЕ" << "    =" << endl;
 		out << S << endl;
+		string D(80, '-');
 		auto it = base_to_do_.begin();
 		for (; it != base_to_do_.end(); it++)
 		{
@@ -121,11 +169,12 @@ public:
 				}
 				out << endl;
 			}
+			out << D << endl;
 		}
-		out << S << endl << endl;
 		out.close();
-		cout << "\n\n";
-		cout << "Напоминания напечатаны в файл!!!" << endl;
+		cout << "\n\n" << endl;
+		SetColor(12, 0);
+		cout << "\tНапоминания напечатаны в файл!!!" << endl;
 		Sleep(2000);
 	}
 };
@@ -138,9 +187,12 @@ public:
 	void shapka()
 	{
 		system("cls");
+		draw();
 		string S(80, '=');
 		cout << "\n\n";
+		SetColor(12, 0);
 		cout << "\t\t\t\tСПИСОК НАПОМИНАНИЙ" << endl;
+		SetColor(11, 0);
 		cout << S << endl;
 		cout << setw(15) << "ДАТА" << "    =" << setw(15) << "ТЕГ" << "    =" << setw(15)
 			<< "ВРЕМЯ НАПОМ." << "    =" << setw(15) << "НАПОМИНАНИЕ" << "    =" << endl;
@@ -202,11 +254,17 @@ public:
 		{
 			create_to_do_->load_to_do();
 			system("cls");
+			draw();
+			gotoxy(13, 5);
+			SetColor(12, 0);
 			cout << "МЕНЮ КАЛЕНДАРЯ\n" << endl;
-			cout << "1. Создание напоминания\n" << "2. Изменение напоминания\n"
-				<< "3. Поиск напоминания\n" << "4. Печать напоминания\n" << "5. Выход" << endl << endl;
-			cout << "Ваш выбор: ";
+			SetColor(9, 0);
+			cout << "\t1. Создание напоминания\n" << "\t2. Изменение напоминания\n"
+				<< "\t3. Поиск напоминания\n" << "\t4. Печать напоминания\n" << "\t5. Выход" << endl << endl;
+			SetColor(12, 0);
+			cout << "\tВаш выбор: ";
 			int var;
+			SetColor(15, 0);
 			cin >> var;
 			switch (var)
 			{
@@ -222,10 +280,16 @@ public:
 			case 4:
 			{
 				system("cls");
+				draw();
+				gotoxy(8, 5);
+				SetColor(12, 0);
 				cout << "ПЕЧАТАТЬ НАПОМИНАНИЯ:\n" << endl;
-				cout << "1. В ФАЙЛ\n" << "2. НА ЭКРАН\n" << endl;
-				cout << "Ваш вариант: ";
+				SetColor(9, 0);
+				cout << "\t1. В ФАЙЛ\n" << "\t2. НА ЭКРАН\n" << endl;
+				SetColor(12, 0);
+				cout << "\tВаш вариант: ";
 				int var1;
+				SetColor(15, 0);
 				cin >> var1;
 				switch (var1)
 				{

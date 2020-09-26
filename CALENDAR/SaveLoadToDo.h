@@ -1,11 +1,6 @@
 #pragma once
 
-#include<iostream>
-#include <fstream>
-#include<string>
-#include<list>
-#include <map>
-#include <vector>
+#include "Function.h"
 #include "SearchToDo.h"
 #include "ChangeToDo.h"
 
@@ -42,7 +37,8 @@ public:
 		}
 		out.close();
 		cout << endl;
-		cout << "Список напоминаний календаря сохранены!!!" << endl;
+		SetColor(12, 0);
+		cout << "\tСписок напоминаний календаря сохранены!!!" << endl;
 		Sleep(2000);
 	}
 
@@ -128,11 +124,13 @@ public:
 		}
 		else
 		{
-			cout << "Файл не найден!!!" << endl;
+			SetColor(12, 0);
+			gotoxy(5, 5);
+			cout << "Файл не найден!!! Переходим к создание нового списка Дел!!!" << endl;
 			Sleep(2000);
 			map <string, list<vector<ToDoParts*>>> base;
 			return base;
-			//exit(0);
+			
 		}
 
 	}

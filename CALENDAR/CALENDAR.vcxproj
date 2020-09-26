@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChangeToDo.h" />
+    <ClInclude Include="Function.h" />
     <ClInclude Include="ListToDo.h" />
     <ClInclude Include="MenuCalendar.h" />
     <ClInclude Include="SaveLoadToDo.h" />
