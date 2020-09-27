@@ -2,6 +2,7 @@
 
 #include "Function.h"
 
+//поиск по базе напоминаний
 class SearchTo
 {
 
@@ -40,13 +41,14 @@ public:
 		}
 	}
 
+	//шапка вывода базы напоминаний
 	void shapka()
 	{
 		system("cls");
 		draw();
 		string S(80, '=');
 		cout << "\n\n";
-		SetColor(12, 0);
+		SetColor(13, 0);
 		cout << "\t\t\t\tСПИСОК НАПОМИНАНИЙ" << endl;
 		SetColor(11, 0);
 		cout << S << endl;
@@ -55,18 +57,29 @@ public:
 		cout << S << endl;
 	}
 
+	//поиск по Дате
 	void searchToDate(map <string, list<vector<ToDoParts*>>> base)
 	{
 		system("cls");
 		draw();
 		string S(80, '=');
-		cout << "\n" << endl;
+		gotoxy(10, 5);
+		SetColor(13, 0);
+		cout << "\tПОИСК ПО ДАТЕ\n" << endl;
 		SetColor(9, 0);
-		cout << "\tВведите дату(формат: дд.мм.гггг): ";
+		cout << "\tВведите дату (формат: мм.дд.гггг): ";
 		string date;
 		SetColor(15, 0);
 		cin >> date;
-		if (base.count(date))
+		if (!base.count(date))
+		{
+			cout << endl;
+			SetColor(12, 0);
+			cout << "\tТакой Даты НЕТ!!! Попробуйте еще раз!\n" << endl;
+			Sleep(2000);
+			SetColor(15, 0);
+		}
+		else
 		{
 			auto it = base.find(date);
 			if ((*it).second.size() > 1)
@@ -107,78 +120,128 @@ public:
 		}
 	}
 
+	//посик по ТЕГ
 	void searchToTeg(map <string, list<vector<ToDoParts*>>> base)
 	{
 		system("cls");
 		draw();
 		string S(80, '=');
-		cout << "\n" << endl;
+		gotoxy(10, 5);
+		SetColor(13, 0);
+		cout << "\tПОИСК ПО ТЕГ\n" << endl;
 		SetColor(9, 0);
-		cout << "\tВведите ТЕГ(формат: важное, неважное): ";
+		cout << "\tВведите ТЕГ (формат: важное, неважное): ";
 		string date;
 		SetColor(15, 0);
 		cin >> date;
-		shapka();
+		int count = 0;
 		auto it = base.begin();
 		for (; it != base.end(); it++)
 		{
 			auto it2 = (*it).second.begin();
 			for (; it2 != (*it).second.end(); it2++)
 			{
-				auto it3 = (*it2).begin();
-				for (; it3 != (*it2).end(); it3++)
+				if ((*it2)[1]->get() == date)
+					count++;
+			}
+		}
+		if(count==0)
+		{
+			cout << endl;
+			SetColor(12, 0);
+			cout << "\tТакого ТЕГА НЕТ!!! Попробуйте еще раз!\n" << endl;
+			Sleep(2000);
+			SetColor(15, 0);
+		}
+		else
+		{
+			shapka();
+			auto it = base.begin();
+			for (; it != base.end(); it++)
+			{
+				auto it2 = (*it).second.begin();
+				for (; it2 != (*it).second.end(); it2++)
 				{
-					if ((*it3)->ToString().c_str() == date)
+					auto it3 = (*it2).begin();
+					for (; it3 != (*it2).end(); it3++)
 					{
-						auto it4 = (*it2).begin();
-						for (; it4 != (*it2).end(); it4++)
+						if ((*it3)->ToString().c_str() == date)
 						{
-							cout << setw(15) << (*it4)->ToString() << "    =";
+							auto it4 = (*it2).begin();
+							for (; it4 != (*it2).end(); it4++)
+							{
+								cout << setw(15) << (*it4)->ToString() << "    =";
+							}
+							cout << endl;
 						}
-						cout << endl;
 					}
 				}
 			}
+			cout << S << endl << endl;
+			SetColor(15, 0);
 		}
-		cout << S << endl << endl;
-		SetColor(15, 0);
 	}
 
+	//поиск по Приоритету
 	void searchToPriority(map <string, list<vector<ToDoParts*>>> base)
 	{
 		system("cls");
 		draw();
 		string S(80, '=');
-		cout << "\n" << endl;
+		gotoxy(10, 5);
+		SetColor(13, 0);
+		cout << "\tПОИСК ПО ПРИОРИТЕТУ\n" << endl;
 		SetColor(9, 0);
-		cout << "\tВведите Приоритет(формат времени: чч.мм): ";
+		cout << "\tВведите Приоритет (формат времени: чч.мм): ";
 		string date;
 		SetColor(15, 0);
 		cin >> date;
-		shapka();
+		int count = 0;
 		auto it = base.begin();
 		for (; it != base.end(); it++)
 		{
 			auto it2 = (*it).second.begin();
 			for (; it2 != (*it).second.end(); it2++)
 			{
-				auto it3 = (*it2).begin();
-				for (; it3 != (*it2).end(); it3++)
+				if ((*it2)[2]->get() == date)
+					count++;
+			}
+		}
+		if (count == 0)
+		{
+			cout << endl;
+			SetColor(12, 0);
+			cout << "\tТакого Приоритета НЕТ!!! Попробуйте еще раз!\n" << endl;
+			Sleep(2000);
+			SetColor(15, 0);
+		}
+		else
+		{
+			shapka();
+			auto it = base.begin();
+			for (; it != base.end(); it++)
+			{
+				auto it2 = (*it).second.begin();
+				for (; it2 != (*it).second.end(); it2++)
 				{
-					if ((*it3)->ToString().c_str() == date)
+					auto it3 = (*it2).begin();
+					for (; it3 != (*it2).end(); it3++)
 					{
-						auto it4 = (*it2).begin();
-						for (; it4 != (*it2).end(); it4++)
+						if ((*it3)->ToString().c_str() == date)
 						{
-							cout << setw(15) << (*it4)->ToString() << "    =";
+							auto it4 = (*it2).begin();
+							for (; it4 != (*it2).end(); it4++)
+							{
+								cout << setw(15) << (*it4)->ToString() << "    =";
+							}
+							cout << endl;
 						}
-						cout << endl;
 					}
 				}
 			}
+			cout << S << endl << endl;
+			SetColor(15, 0);
 		}
-		cout << S << endl << endl;
-		SetColor(15, 0);
 	}
 
 };

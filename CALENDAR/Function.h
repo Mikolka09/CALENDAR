@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <fstream>
 #include <Windows.h>
+#include <cstdlib>
 
 using namespace std;
 

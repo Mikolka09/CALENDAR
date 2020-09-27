@@ -2,6 +2,7 @@
 
 #include "Function.h"
 
+//редактирование напоминания
 class ChangeTo
 {
 
@@ -11,11 +12,11 @@ public:
 		system("cls");
 		draw();
 		gotoxy(10, 5);
-		SetColor(12, 0);
+		SetColor(13, 0);
 		cout << "РЕДАКТОР НАПОМИНАНИЙ:\n" << endl;
 		SetColor(9, 0);
 		cout << "\t1. Редактировать Дату\n" << "\t2. Редактировать ТЕГА\n" << "\t3. Редактировать Приоритет(время)\n"
-			<< "\t4. Редактировать текст Напоминания\n" << "\t5. Удаление напоминания\n" << endl;
+			<< "\t4. Редактировать текст Напоминания\n" << "\t5. Удаление напоминания\n" << "\t6. Выход\n" << endl;
 		SetColor(12, 0);
 		cout << "\tВаш выбор: ";
 		int var;
@@ -29,30 +30,55 @@ public:
 		case 2:
 			changeToTeg(base);
 			return base;
-
 		case 3:
 			changeToPriority(base);
 			return base;
-
 		case 4:
 			changeToName(base);
 			return base;
 		case 5:
 			deleteToDo(base);
 			return base;
+		case 6:
+			return base;
 		default:
 			break;
 		}
 	}
 
+	void static sort_base(map <string, list<vector<ToDoParts*>>>& base)
+	{
+		auto it = base.begin();
+		for (; it != base.end(); it++)
+		{
+			auto it2 = (*it).second.begin();
+			if ((*it).second.size() > 1)
+			{
+				for (; it2 != (*it).second.end(); it2++)
+				{
+					for (auto it3 = it2; it3 != (*it).second.end(); it3++)
+					{
+						setlocale(LC_NUMERIC, "C");
+						if (atof((*it2).at(2)->get().c_str()) > atof((*it3).at(2)->get().c_str()))
+						{
+							iter_swap(it2, it3);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//вывод базы напоминаний на экран
 	void static print(map <string, list<vector<ToDoParts*>>> base)
 	{
 		system("cls");
 		draw();
+		sort_base(base);
 		string S(80, '=');
 		string D(80, '-');
 		cout << "\n\n";
-		SetColor(12, 0);
+		SetColor(13, 0);
 		cout << "\t\t\t\tСПИСОК НАПОМИНАНИЙ" << endl;
 		SetColor(11, 0);
 		cout << S << endl;
@@ -78,6 +104,7 @@ public:
 		SetColor(15, 0);
 	}
 
+	//редактирование даты напоминания
 	map <string, list<vector<ToDoParts*>>> changeToDate(map <string, list<vector<ToDoParts*>>>& base)
 	{
 		print(base);
@@ -95,39 +122,64 @@ public:
 			Sleep(2000);
 			return base;
 		}
-		else
+		else if (base.count(date))
 		{
 			cout << "\n" << endl;
 			SetColor(9, 0);
-			cout << "\tВведите нову дату (формат: дд.мм.гггг): ";
+			cout << "\tВведите нову дату (формат: мм.дд.гггг): ";
 			string new_date;
 			SetColor(15, 0);
 			cin >> new_date;
-			auto it = base.find(date);
-			if (it != base.cend())
-				if (base.find(new_date) == base.cend())
-				{
-					base[new_date] = it->second;
-					base.erase(it);
-				}
-			auto iter = base.find(new_date);
-			auto it2 = (*iter).second.begin();
+			list<vector<ToDoParts*>> list_to;
+			auto iter = base.find(date);
 			if ((*iter).second.size() == 1)
 			{
-				auto it3 = (*it2).begin();
-				if ((*it3)->ToString().c_str() == date)
-					(*it3)->set(new_date);
+				if (iter != base.cend())
+				{
+					if (base.find(new_date) == base.cend())
+					{
+						base[new_date] = iter->second;
+						base.erase(iter);
+					}
+				}
+				auto iter = base.find(new_date);
+				auto it2 = (*iter).second.begin();
+				if ((*it2)[0]->get() == date)
+					(*it2)[0]->set(new_date);
 			}
 			else
 			{
+				cout << "\n" << endl;
+				SetColor(9, 0);
+				cout << "\tУкажите Приоритет (время) для изменения Даты (важное, неважное): ";
+				string prio;
+				SetColor(15, 0);
+				cin >> prio;
+				auto iter = base.find(date);
 				auto it = (*iter).second.begin();
 				for (; it != (*iter).second.end(); it++)
 				{
-					(*it)[0]->set(new_date);
+					if ((*it)[0]->get() == date)
+					{
+						if ((*it)[2]->get() == prio)
+						{
+							list_to.push_back((*it));
+							if (it != (*iter).second.end())
+							{
+								it = (*iter).second.erase(it);
+								if (it == (*iter).second.end())
+									advance(it, -1);
+							}
+
+						}
+
+					}
 				}
+				list_to.front()[0]->set(new_date);
+				base.insert(make_pair(list_to.front()[0]->get(), list_to));
 			}
 			cout << "\n" << endl;
-			SetColor(15, 0);
+			SetColor(12, 0);
 			cout << "\tДата напоминания изменена!!!" << endl;
 			Sleep(2000);
 			system("cls");
@@ -136,8 +188,10 @@ public:
 			Sleep(4000);
 			return base;
 		}
+		return base;
 	}
 
+	//редактирование ТЕГА напоминания
 	map <string, list<vector<ToDoParts*>>> changeToTeg(map <string, list<vector<ToDoParts*>>>& base)
 	{
 		print(base);
@@ -205,6 +259,7 @@ public:
 		}
 	}
 
+	//редактирование Приоритета напоминания
 	map <string, list<vector<ToDoParts*>>> changeToPriority(map <string, list<vector<ToDoParts*>>>& base)
 	{
 		print(base);
@@ -272,6 +327,7 @@ public:
 		}
 	}
 
+	//редактирование Текста напоминания
 	map <string, list<vector<ToDoParts*>>> changeToName(map <string, list<vector<ToDoParts*>>>& base)
 	{
 		print(base);
@@ -285,7 +341,7 @@ public:
 		{
 			cout << endl;
 			SetColor(12, 0);
-			cout << "\tакой Даты НЕТ!!! Попробуйте еще раз!" << endl;
+			cout << "\tТакой Даты НЕТ!!! Попробуйте еще раз!" << endl;
 			Sleep(2000);
 			return base;
 		}
@@ -346,6 +402,7 @@ public:
 		}
 	}
 
+	//удаление напоминания
 	map <string, list<vector<ToDoParts*>>> deleteToDo(map <string, list<vector<ToDoParts*>>>& base)
 	{
 		print(base);
@@ -390,10 +447,10 @@ public:
 								if (it == (*iter).second.end())
 									advance(it, -1);
 							}
-							
+
 						}
 					}
-					
+
 				}
 			}
 			cout << "\n" << endl;

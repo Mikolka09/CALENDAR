@@ -7,7 +7,7 @@
 #include "ChangeToDo.h"
 #include "Function.h"
 
-static map <string, list<vector<ToDoParts*>>> base_to_do_;
+static map <string, list<vector<ToDoParts*>>> base_to_do_;  //база данных напоминаний
 
 class CreateToDo
 {
@@ -22,6 +22,7 @@ public:
 	map <string, list<vector<ToDoParts*>>> get_base_to_do() { return base_to_do_; }
 	void set_base_to_do(map <string, list<vector<ToDoParts*>>> base) { base_to_do_ = base; }
 
+	//создание напоминания
 	void create_to_do()
 	{
 		if (!base_to_do_.empty())
@@ -29,8 +30,8 @@ public:
 		system("cls");
 		draw();
 		cout << endl;
-		gotoxy(10, 4);
-		SetColor(12, 0);
+		gotoxy(10, 5);
+		SetColor(13, 0);
 		cout << "\tСОЗДАНИЕ НАПОМИНАНИЯ\n" << endl;
 		SetColor(9, 0);
 		create_ = new Create;
@@ -85,14 +86,20 @@ public:
 		sort_base(base_to_do_);
 		save_to_do();
 	}
+
+	//сохранение напоминания в файл
 	void save_to_do()
 	{
 		save_.save_to_do(base_to_do_);
 	}
+
+	//загрузка напоминания из файла
 	void load_to_do()
 	{
 		base_to_do_ = load_.load_to_do();
 	}
+
+	//сортировка списков напоминаний по Приоритету
 	void sort_base(map <string, list<vector<ToDoParts*>>>& base)
 	{
 		auto it = base.begin();
@@ -105,13 +112,18 @@ public:
 				{
 					for (auto it3 = it2; it3 != (*it).second.end(); it3++)
 					{
-						if ((*it2).at(2)->get() > (*it3).at(2)->get())
+						setlocale(LC_NUMERIC, "C");
+						if (atof((*it2).at(2)->get().c_str()) > atof((*it3).at(2)->get().c_str()))
+						{
 							iter_swap(it2, it3);
+						}
 					}
 				}
 			}
 		}
 	}
+
+	//вывод напоминания на экран
 	void print()
 	{
 		load_to_do();
@@ -135,12 +147,16 @@ public:
 		SetColor(15, 0);
 		cout << endl;
 	}
+
+	//вывод напоминаия в файл
 	void print_file()
 	{
 		load_to_do();
 		system("cls");
 		draw();
-		cout << "\n\n" << endl;
+		gotoxy(10, 5);
+		SetColor(13, 0);
+		cout << "\tВЫВОД БАЗЫ В ФАЙЛ\n" << endl;
 		SetColor(9, 0);
 		cout << "\tВведите имя файла: ";
 		string name;
@@ -179,7 +195,7 @@ public:
 	}
 };
 
-
+//вывод напоминания в файл
 class PrintToFile
 {
 	CreateToDo* cr_to_;
@@ -190,7 +206,7 @@ public:
 		draw();
 		string S(80, '=');
 		cout << "\n\n";
-		SetColor(12, 0);
+		SetColor(13, 0);
 		cout << "\t\t\t\tСПИСОК НАПОМИНАНИЙ" << endl;
 		SetColor(11, 0);
 		cout << S << endl;
@@ -209,6 +225,7 @@ public:
 	}
 };
 
+//посик напоминания
 class SearchToDo
 {
 	SearchTo sr;
@@ -221,6 +238,7 @@ public:
 	}
 };
 
+//редактирование напоминания
 class ChangeToDo
 {
 	ChangeTo ch;
@@ -233,6 +251,7 @@ public:
 	}
 };
 
+//фасад базы напоминаний
 class CalendarFasade
 {
 	CreateToDo* create_to_do_;
@@ -248,6 +267,7 @@ public:
 		change_to_do_ = new ChangeToDo;
 	}
 
+	//меню календаря
 	void menu()
 	{
 		while (true)
@@ -256,7 +276,7 @@ public:
 			system("cls");
 			draw();
 			gotoxy(13, 5);
-			SetColor(12, 0);
+			SetColor(13, 0);
 			cout << "МЕНЮ КАЛЕНДАРЯ\n" << endl;
 			SetColor(9, 0);
 			cout << "\t1. Создание напоминания\n" << "\t2. Изменение напоминания\n"
@@ -282,10 +302,10 @@ public:
 				system("cls");
 				draw();
 				gotoxy(8, 5);
-				SetColor(12, 0);
+				SetColor(13, 0);
 				cout << "ПЕЧАТАТЬ НАПОМИНАНИЯ:\n" << endl;
 				SetColor(9, 0);
-				cout << "\t1. В ФАЙЛ\n" << "\t2. НА ЭКРАН\n" << endl;
+				cout << "\t1. В ФАЙЛ\n" << "\t2. НА ЭКРАН\n" << "\t3. Выход\n" << endl;
 				SetColor(12, 0);
 				cout << "\tВаш вариант: ";
 				int var1;
@@ -299,6 +319,9 @@ public:
 				case 2:
 					print_to_file_->print();
 					system("pause");
+					break;
+				case 3:
+					menu();
 					break;
 				default:
 					break;

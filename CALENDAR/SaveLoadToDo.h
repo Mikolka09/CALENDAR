@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//сохранение базы напоминаний в файл
 class SaveToDo
 {
 
@@ -45,6 +46,7 @@ public:
 	
 };
 
+//загрузка базы напоминаний из файл
 class LoadToDo
 {
 
@@ -101,7 +103,7 @@ public:
 							dt->set(d);
 							vec.push_back(dt);
 						}
-						delete buff;
+						delete[] buff;
 					}
 					list.push_back(vec);
 				}

@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//интерфейс частей напоминания
 class ToDoParts
 {
 	
@@ -13,6 +14,7 @@ public:
 	virtual string ToString() = 0;
 };
 
+//часть напоминания Дата
 class DateToDo : public ToDoParts
 {
 	string date_;
@@ -22,6 +24,7 @@ public:
 	string ToString() override { return date_; }
 };
 
+//часть напоминания ТЕГ 
 class TegToDo : public ToDoParts
 {
 	string teg_;
@@ -31,6 +34,7 @@ public:
 	string ToString() override { return teg_; }
 };
 
+//часть напоминания Приоритет
 class PriorityToDo : public ToDoParts
 {
 	string priority_;
@@ -40,6 +44,7 @@ public:
 	string ToString() override { return priority_; }
 };
 
+//часть напоминания Текст
 class NameToDo : public ToDoParts
 {
 	string name_;
@@ -49,10 +54,10 @@ public:
 	string ToString() override { return name_; }
 };
 
-
+//список напоминаний
 class ListToDo
 {
-	list<vector<ToDoParts*>> list_to_do_;
+	list<vector<ToDoParts*>> list_to_do_;    //список напоминаний (основной)
 
 public:
 
@@ -88,6 +93,7 @@ public:
 
 };
 
+//строитель списка напоминаний
 class Builder
 {
 public:
@@ -99,11 +105,12 @@ public:
 
 };
 
+//создание частей напоминания
 class ListToDoBuilder : public Builder
 {
-	vector<ToDoParts*> parts_;
+	vector<ToDoParts*> parts_;             //вектор частей одного напоминания
 	ListToDo* list_;
-	list<vector<ToDoParts*>> list_to;
+	list<vector<ToDoParts*>> list_to;      //список напоминаний (промежуточный)
 public:
 
 	ListToDoBuilder() { reset(); }
@@ -118,8 +125,10 @@ public:
 	{
 		DateToDo* date = new DateToDo;
 		string d;
-		gotoxy(5, 6);
-		cout << "Введите Дату выполнения Дела: ";
+		gotoxy(5, 7);
+		SetColor(9, 0);
+		cout << "Введите Дату выполнения Дела (формат: мм.дд.гггг): ";
+		SetColor(15, 0);
 		cin >> d;
 		date->set(d);
 		parts_.push_back(date);
@@ -128,8 +137,10 @@ public:
 	{
 		TegToDo* teg = new TegToDo;
 		string t;
-		gotoxy(5, 7);
+		gotoxy(5, 8);
+		SetColor(9, 0);
 		cout << "Введите ТЕГ (важное, неважное): ";
+		SetColor(15, 0);
 		cin >> t;
 		teg->set(t);
 		parts_.push_back(teg);
@@ -138,8 +149,10 @@ public:
 	{
 		PriorityToDo* prior = new PriorityToDo;
 		string p;
-		gotoxy(5, 8);
+		gotoxy(5, 9);
+		SetColor(9, 0);
 		cout << "Введите Приоритет (формат времени: чч.мм): ";
+		SetColor(15, 0);
 		cin >> p;
 		prior->set(p);
 		parts_.push_back(prior);
@@ -148,10 +161,12 @@ public:
 	{
 		NameToDo* name_to = new NameToDo;
 		string nm;
-		gotoxy(5, 9);
+		gotoxy(5, 10);
 		cin.ignore();
+		SetColor(9, 0);
 		cout << "Введите наименование Дела: ";
 		char buff[1200];
+		SetColor(15, 0);
 		cin.getline(buff, 1200);
 		char* name = new char[strlen(buff) + 1];
 		strcpy(name, buff);
@@ -171,6 +186,7 @@ public:
 	}
 };
 
+//создатель напоминания
 class Create
 {
 	Builder* builder;
