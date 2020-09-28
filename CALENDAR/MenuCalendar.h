@@ -60,15 +60,21 @@ public:
 					if (count > 0)
 					{
 						system("cls");
-						cout << "\n\n" << endl;
+						draw();
+						cout << endl;
+						gotoxy(10, 5);
 						SetColor(12, 0);
 						cout << "\tÒàêîå Ïðèîðèòåò óæå óñòàíîâëåí! Ïîïðîáóéòå åùå ðàç!" << endl;
 						Sleep(2000);
 						system("cls");
+						draw();
+						cout << endl;
+						gotoxy(10, 5);
 						string p;
 						cout << "\n\n" << endl;
 						SetColor(9, 0);
 						cout << "\tÂâåäèòå íîâûé Ïðèîðèòåò (ôîðìàò âðåìåíè: ÷÷.ìì): ";
+						SetColor(15, 0);
 						cin >> p;
 						list_->get_list_to_do().front()[2]->set(p);
 						good = true;
@@ -128,7 +134,7 @@ public:
 	{
 		load_to_do();
 		sort_base(base_to_do_);
-		string D(80, '-');
+		string D(92, '-');
 		auto it = base_to_do_.begin();
 		for (; it != base_to_do_.end(); it++)
 		{
@@ -138,7 +144,7 @@ public:
 				auto it3 = (*it2).begin();
 				for (; it3 != (*it2).end(); it3++)
 				{
-					cout << setw(15) << (*it3)->ToString() << "    =";
+					cout << setw(18) << (*it3)->ToString() << "    =";
 				}
 				cout << endl;
 			}
@@ -164,14 +170,14 @@ public:
 		cin >> name;
 		name += ".txt";
 		ofstream out(name, ios::out);
-		string S(80, '=');
+		string S(92, '=');
 		out << "\n\n";
 		out << "\t\t\t\tÑÏÈÑÎÊ ÍÀÏÎÌÈÍÀÍÈÉ" << endl;
 		out << S << endl;
-		out << setw(15) << "ÄÀÒÀ" << "    =" << setw(15) << "ÒÅÃ" << "    =" << setw(15)
-			<< "ÂÐÅÌß ÍÀÏÎÌ." << "    =" << setw(15) << "ÍÀÏÎÌÈÍÀÍÈÅ" << "    =" << endl;
+		out << setw(18) << "ÄÀÒÀ (ìì.ää.ãããã)" << "    =" << setw(18) << "ÒÅÃ" << "    =" << setw(18)
+			<< "ÂÐÅÌß ÍÀÏÎÌ." << "    =" << setw(18) << "ÍÀÏÎÌÈÍÀÍÈÅ" << "    =" << endl;
 		out << S << endl;
-		string D(80, '-');
+		string D(92, '-');
 		auto it = base_to_do_.begin();
 		for (; it != base_to_do_.end(); it++)
 		{
@@ -181,7 +187,7 @@ public:
 				auto it3 = (*it2).begin();
 				for (; it3 != (*it2).end(); it3++)
 				{
-					out << setw(15) << (*it3)->ToString() << "    =";
+					out << setw(18) << (*it3)->ToString() << "    =";
 				}
 				out << endl;
 			}
@@ -204,14 +210,14 @@ public:
 	{
 		system("cls");
 		draw();
-		string S(80, '=');
+		string S(92, '=');
 		cout << "\n\n";
 		SetColor(13, 0);
 		cout << "\t\t\t\tÑÏÈÑÎÊ ÍÀÏÎÌÈÍÀÍÈÉ" << endl;
 		SetColor(11, 0);
 		cout << S << endl;
-		cout << setw(15) << "ÄÀÒÀ" << "    =" << setw(15) << "ÒÅÃ" << "    =" << setw(15)
-			<< "ÂÐÅÌß ÍÀÏÎÌ." << "    =" << setw(15) << "ÍÀÏÎÌÈÍÀÍÈÅ" << "    =" << endl;
+		cout << setw(18) << "ÄÀÒÀ (ìì.ää.ãããã)" << "    =" << setw(18) << "ÒÅÃ" << "    =" << setw(18)
+			<< "ÂÐÅÌß ÍÀÏÎÌ." << "    =" << setw(18) << "ÍÀÏÎÌÈÍÀÍÈÅ" << "    =" << endl;
 		cout << S << endl;
 	}
 	void print()

@@ -46,14 +46,14 @@ public:
 	{
 		system("cls");
 		draw();
-		string S(80, '=');
+		string S(92, '=');
 		cout << "\n\n";
 		SetColor(13, 0);
 		cout << "\t\t\t\tÑÏÈÑÎÊ ÍÀÏÎÌÈÍÀÍÈÉ" << endl;
 		SetColor(11, 0);
 		cout << S << endl;
-		cout << setw(15) << "ÄÀÒÀ" << "    =" << setw(15) << "ÒÅÃ" << "    =" << setw(15)
-			<< "ÂÐÅÌß ÍÀÏÎÌ." << "    =" << setw(15) << "ÍÀÏÎÌÈÍÀÍÈÅ" << "    =" << endl;
+		cout << setw(18) << "ÄÀÒÀ (ìì.ää.ãããã)" << "    =" << setw(18) << "ÒÅÃ" << "    =" << setw(18)
+			<< "ÂÐÅÌß ÍÀÏÎÌ." << "    =" << setw(18) << "ÍÀÏÎÌÈÍÀÍÈÅ" << "    =" << endl;
 		cout << S << endl;
 	}
 
@@ -62,7 +62,7 @@ public:
 	{
 		system("cls");
 		draw();
-		string S(80, '=');
+		string S(92, '=');
 		gotoxy(10, 5);
 		SetColor(13, 0);
 		cout << "\tÏÎÈÑÊ ÏÎ ÄÀÒÅ\n" << endl;
@@ -93,7 +93,7 @@ public:
 					{
 						for (; it3 != (*it2).end(); it3++)
 						{
-							cout << setw(15) << (*it3)->ToString() << "    =";
+							cout << setw(18) << (*it3)->ToString() << "    =";
 						}
 						cout << endl;
 					}
@@ -110,7 +110,7 @@ public:
 					auto it3 = (*it2).begin();
 					for (; it3 != (*it2).end(); it3++)
 					{
-						cout << setw(15) << (*it3)->ToString() << "    =";
+						cout << setw(18) << (*it3)->ToString() << "    =";
 					}
 					cout << endl;
 				}
@@ -125,7 +125,7 @@ public:
 	{
 		system("cls");
 		draw();
-		string S(80, '=');
+		string S(92, '=');
 		gotoxy(10, 5);
 		SetColor(13, 0);
 		cout << "\tÏÎÈÑÊ ÏÎ ÒÅÃ\n" << endl;
@@ -170,7 +170,7 @@ public:
 							auto it4 = (*it2).begin();
 							for (; it4 != (*it2).end(); it4++)
 							{
-								cout << setw(15) << (*it4)->ToString() << "    =";
+								cout << setw(18) << (*it4)->ToString() << "    =";
 							}
 							cout << endl;
 						}
@@ -187,7 +187,7 @@ public:
 	{
 		system("cls");
 		draw();
-		string S(80, '=');
+		string S(92, '=');
 		gotoxy(10, 5);
 		SetColor(13, 0);
 		cout << "\tÏÎÈÑÊ ÏÎ ÏÐÈÎÐÈÒÅÒÓ\n" << endl;
@@ -232,7 +232,7 @@ public:
 							auto it4 = (*it2).begin();
 							for (; it4 != (*it2).end(); it4++)
 							{
-								cout << setw(15) << (*it4)->ToString() << "    =";
+								cout << setw(18) << (*it4)->ToString() << "    =";
 							}
 							cout << endl;
 						}
