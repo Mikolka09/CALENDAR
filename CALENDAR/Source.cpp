@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include <Windows.h>
 #include"MenuCalendar.h"
@@ -14,9 +14,9 @@ int main()
 
 	SetColor(12, 0);
 	cout << "\n\n\n" << endl;
-	cout << "\t\tÏÐÈËÎÆÅÍÈÅ ÊÀËÅÍÄÀÐÜ\n" << endl;
+	cout << "\t\tÐŸÐ Ð˜Ð›ÐžÐ–Ð•ÐÐ˜Ð• ÐšÐÐ›Ð•ÐÐ”ÐÐ Ð¬\n" << endl;
 	SetColor(9, 0);
-	cout << "\t\t   Èäåò çàãðóçêà" << endl;
+	cout << "\t\t   Ð˜Ð´ÐµÑ‚ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ°" << endl;
 	cout << "\t\t   ";
 	SetColor(10, 0);
 	for (size_t i = 0; i < 13; i++)

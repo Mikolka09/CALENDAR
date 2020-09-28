@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 
 #include "ListToDo.h"
@@ -7,7 +7,7 @@
 #include "ChangeToDo.h"
 #include "Function.h"
 
-static map <string, list<vector<ToDoParts*>>> base_to_do_;  //база данных напоминаний
+static map <string, list<vector<ToDoParts*>>> base_to_do_;  //Р±Р°Р·Р° РґР°РЅРЅС‹С… РЅР°РїРѕРјРёРЅР°РЅРёР№
 
 class CreateToDo
 {
@@ -22,7 +22,7 @@ public:
 	map <string, list<vector<ToDoParts*>>> get_base_to_do() { return base_to_do_; }
 	void set_base_to_do(map <string, list<vector<ToDoParts*>>> base) { base_to_do_ = base; }
 
-	//создание напоминания
+	//СЃРѕР·РґР°РЅРёРµ РЅР°РїРѕРјРёРЅР°РЅРёСЏ
 	void create_to_do()
 	{
 		if (!base_to_do_.empty())
@@ -32,7 +32,7 @@ public:
 		cout << endl;
 		gotoxy(10, 5);
 		SetColor(13, 0);
-		cout << "\tСОЗДАНИЕ НАПОМИНАНИЯ\n" << endl;
+		cout << "\tРЎРћР—Р”РђРќРР• РќРђРџРћРњРРќРђРќРРЇ\n" << endl;
 		SetColor(9, 0);
 		create_ = new Create;
 		ltd_ = new ListToDoBuilder;
@@ -64,7 +64,7 @@ public:
 						cout << endl;
 						gotoxy(10, 5);
 						SetColor(12, 0);
-						cout << "\tТакое Приоритет уже установлен! Попробуйте еще раз!" << endl;
+						cout << "\tРўР°РєРѕРµ РџСЂРёРѕСЂРёС‚РµС‚ СѓР¶Рµ СѓСЃС‚Р°РЅРѕРІР»РµРЅ! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰Рµ СЂР°Р·!" << endl;
 						Sleep(2000);
 						system("cls");
 						draw();
@@ -73,7 +73,7 @@ public:
 						string p;
 						cout << "\n\n" << endl;
 						SetColor(9, 0);
-						cout << "\tВведите новый Приоритет (формат времени: чч.мм): ";
+						cout << "\tР’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РџСЂРёРѕСЂРёС‚РµС‚ (С„РѕСЂРјР°С‚ РІСЂРµРјРµРЅРё: С‡С‡.РјРј): ";
 						SetColor(15, 0);
 						cin >> p;
 						list_->get_list_to_do().front()[2]->set(p);
@@ -93,19 +93,19 @@ public:
 		save_to_do();
 	}
 
-	//сохранение напоминания в файл
+	//СЃРѕС…СЂР°РЅРµРЅРёРµ РЅР°РїРѕРјРёРЅР°РЅРёСЏ РІ С„Р°Р№Р»
 	void save_to_do()
 	{
 		save_.save_to_do(base_to_do_);
 	}
 
-	//загрузка напоминания из файла
+	//Р·Р°РіСЂСѓР·РєР° РЅР°РїРѕРјРёРЅР°РЅРёСЏ РёР· С„Р°Р№Р»Р°
 	void load_to_do()
 	{
 		base_to_do_ = load_.load_to_do();
 	}
 
-	//сортировка списков напоминаний по Приоритету
+	//СЃРѕСЂС‚РёСЂРѕРІРєР° СЃРїРёСЃРєРѕРІ РЅР°РїРѕРјРёРЅР°РЅРёР№ РїРѕ РџСЂРёРѕСЂРёС‚РµС‚Сѓ
 	void sort_base(map <string, list<vector<ToDoParts*>>>& base)
 	{
 		auto it = base.begin();
@@ -129,7 +129,7 @@ public:
 		}
 	}
 
-	//вывод напоминания на экран
+	//РІС‹РІРѕРґ РЅР°РїРѕРјРёРЅР°РЅРёСЏ РЅР° СЌРєСЂР°РЅ
 	void print()
 	{
 		load_to_do();
@@ -154,7 +154,7 @@ public:
 		cout << endl;
 	}
 
-	//вывод напоминаия в файл
+	//РІС‹РІРѕРґ РЅР°РїРѕРјРёРЅР°РёСЏ РІ С„Р°Р№Р»
 	void print_file()
 	{
 		load_to_do();
@@ -162,9 +162,9 @@ public:
 		draw();
 		gotoxy(10, 5);
 		SetColor(13, 0);
-		cout << "\tВЫВОД БАЗЫ В ФАЙЛ\n" << endl;
+		cout << "\tР’Р«Р’РћР” Р‘РђР—Р« Р’ Р¤РђР™Р›\n" << endl;
 		SetColor(9, 0);
-		cout << "\tВведите имя файла: ";
+		cout << "\tР’РІРµРґРёС‚Рµ РёРјСЏ С„Р°Р№Р»Р°: ";
 		string name;
 		SetColor(15, 0);
 		cin >> name;
@@ -172,10 +172,10 @@ public:
 		ofstream out(name, ios::out);
 		string S(92, '=');
 		out << "\n\n";
-		out << "\t\t\t\tСПИСОК НАПОМИНАНИЙ" << endl;
+		out << "\t\t\t\tРЎРџРРЎРћРљ РќРђРџРћРњРРќРђРќРР™" << endl;
 		out << S << endl;
-		out << setw(18) << "ДАТА (мм.дд.гггг)" << "    =" << setw(18) << "ТЕГ" << "    =" << setw(18)
-			<< "ВРЕМЯ НАПОМ." << "    =" << setw(18) << "НАПОМИНАНИЕ" << "    =" << endl;
+		out << setw(18) << "Р”РђРўРђ (РјРј.РґРґ.РіРіРіРі)" << "    =" << setw(18) << "РўР•Р“" << "    =" << setw(18)
+			<< "Р’Р Р•РњРЇ РќРђРџРћРњ." << "    =" << setw(18) << "РќРђРџРћРњРРќРђРќРР•" << "    =" << endl;
 		out << S << endl;
 		string D(92, '-');
 		auto it = base_to_do_.begin();
@@ -196,12 +196,12 @@ public:
 		out.close();
 		cout << "\n\n" << endl;
 		SetColor(12, 0);
-		cout << "\tНапоминания напечатаны в файл!!!" << endl;
+		cout << "\tРќР°РїРѕРјРёРЅР°РЅРёСЏ РЅР°РїРµС‡Р°С‚Р°РЅС‹ РІ С„Р°Р№Р»!!!" << endl;
 		Sleep(2000);
 	}
 };
 
-//вывод напоминания в файл
+//РІС‹РІРѕРґ РЅР°РїРѕРјРёРЅР°РЅРёСЏ РІ С„Р°Р№Р»
 class PrintToFile
 {
 	CreateToDo* cr_to_;
@@ -213,11 +213,11 @@ public:
 		string S(92, '=');
 		cout << "\n\n";
 		SetColor(13, 0);
-		cout << "\t\t\t\tСПИСОК НАПОМИНАНИЙ" << endl;
+		cout << "\t\t\t\tРЎРџРРЎРћРљ РќРђРџРћРњРРќРђРќРР™" << endl;
 		SetColor(11, 0);
 		cout << S << endl;
-		cout << setw(18) << "ДАТА (мм.дд.гггг)" << "    =" << setw(18) << "ТЕГ" << "    =" << setw(18)
-			<< "ВРЕМЯ НАПОМ." << "    =" << setw(18) << "НАПОМИНАНИЕ" << "    =" << endl;
+		cout << setw(18) << "Р”РђРўРђ (РјРј.РґРґ.РіРіРіРі)" << "    =" << setw(18) << "РўР•Р“" << "    =" << setw(18)
+			<< "Р’Р Р•РњРЇ РќРђРџРћРњ." << "    =" << setw(18) << "РќРђРџРћРњРРќРђРќРР•" << "    =" << endl;
 		cout << S << endl;
 	}
 	void print()
@@ -231,7 +231,7 @@ public:
 	}
 };
 
-//посик напоминания
+//РїРѕСЃРёРє РЅР°РїРѕРјРёРЅР°РЅРёСЏ
 class SearchToDo
 {
 	SearchTo sr;
@@ -244,7 +244,7 @@ public:
 	}
 };
 
-//редактирование напоминания
+//СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РЅР°РїРѕРјРёРЅР°РЅРёСЏ
 class ChangeToDo
 {
 	ChangeTo ch;
@@ -257,7 +257,7 @@ public:
 	}
 };
 
-//фасад базы напоминаний
+//С„Р°СЃР°Рґ Р±Р°Р·С‹ РЅР°РїРѕРјРёРЅР°РЅРёР№
 class CalendarFasade
 {
 	CreateToDo* create_to_do_;
@@ -273,7 +273,7 @@ public:
 		change_to_do_ = new ChangeToDo;
 	}
 
-	//меню календаря
+	//РјРµРЅСЋ РєР°Р»РµРЅРґР°СЂСЏ
 	void menu()
 	{
 		while (true)
@@ -283,12 +283,12 @@ public:
 			draw();
 			gotoxy(13, 5);
 			SetColor(13, 0);
-			cout << "МЕНЮ КАЛЕНДАРЯ\n" << endl;
+			cout << "РњР•РќР® РљРђР›Р•РќР”РђР РЇ\n" << endl;
 			SetColor(9, 0);
-			cout << "\t1. Создание напоминания\n" << "\t2. Изменение напоминания\n"
-				<< "\t3. Поиск напоминания\n" << "\t4. Печать напоминания\n" << "\t5. Выход" << endl << endl;
+			cout << "\t1. РЎРѕР·РґР°РЅРёРµ РЅР°РїРѕРјРёРЅР°РЅРёСЏ\n" << "\t2. РР·РјРµРЅРµРЅРёРµ РЅР°РїРѕРјРёРЅР°РЅРёСЏ\n"
+				<< "\t3. РџРѕРёСЃРє РЅР°РїРѕРјРёРЅР°РЅРёСЏ\n" << "\t4. РџРµС‡Р°С‚СЊ РЅР°РїРѕРјРёРЅР°РЅРёСЏ\n" << "\t5. Р’С‹С…РѕРґ" << endl << endl;
 			SetColor(12, 0);
-			cout << "\tВаш выбор: ";
+			cout << "\tР’Р°С€ РІС‹Р±РѕСЂ: ";
 			int var;
 			SetColor(15, 0);
 			cin >> var;
@@ -309,11 +309,11 @@ public:
 				draw();
 				gotoxy(8, 5);
 				SetColor(13, 0);
-				cout << "ПЕЧАТАТЬ НАПОМИНАНИЯ:\n" << endl;
+				cout << "РџР•Р§РђРўРђРўР¬ РќРђРџРћРњРРќРђРќРРЇ:\n" << endl;
 				SetColor(9, 0);
-				cout << "\t1. В ФАЙЛ\n" << "\t2. НА ЭКРАН\n" << "\t3. Выход\n" << endl;
+				cout << "\t1. Р’ Р¤РђР™Р›\n" << "\t2. РќРђ Р­РљР РђРќ\n" << "\t3. Р’С‹С…РѕРґ\n" << endl;
 				SetColor(12, 0);
-				cout << "\tВаш вариант: ";
+				cout << "\tР’Р°С€ РІР°СЂРёР°РЅС‚: ";
 				int var1;
 				SetColor(15, 0);
 				cin >> var1;

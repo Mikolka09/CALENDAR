@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <algorithm>
 #include<iostream>
@@ -40,7 +40,7 @@ void draw()
 {
 	SetColor(12, 0);
 	gotoxy(10, 2);
-	cout << "Ï Ð È Ë Î Æ Å Í È Å   Ê À Ë Å Í Ä À Ð Ü" << endl;
+	cout << "ÐŸ Ð  Ð˜ Ð› Ðž Ð– Ð• Ð Ð˜ Ð•   Ðš Ð Ð› Ð• Ð Ð” Ð Ð  Ð¬" << endl;
 	gotoxy(10, 3);
 	cout << "=======================================" << endl;
 }

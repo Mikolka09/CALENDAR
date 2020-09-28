@@ -1,10 +1,10 @@
-#pragma once
+п»ї#pragma once
 
 #include "Function.h"
 
 using namespace std;
 
-//интерфейс частей напоминания
+//РёРЅС‚РµСЂС„РµР№СЃ С‡Р°СЃС‚РµР№ РЅР°РїРѕРјРёРЅР°РЅРёСЏ
 class ToDoParts
 {
 	
@@ -14,7 +14,7 @@ public:
 	virtual string ToString() = 0;
 };
 
-//часть напоминания Дата
+//С‡Р°СЃС‚СЊ РЅР°РїРѕРјРёРЅР°РЅРёСЏ Р”Р°С‚Р°
 class DateToDo : public ToDoParts
 {
 	string date_;
@@ -24,7 +24,7 @@ public:
 	string ToString() override { return date_; }
 };
 
-//часть напоминания ТЕГ 
+//С‡Р°СЃС‚СЊ РЅР°РїРѕРјРёРЅР°РЅРёСЏ РўР•Р“ 
 class TegToDo : public ToDoParts
 {
 	string teg_;
@@ -34,7 +34,7 @@ public:
 	string ToString() override { return teg_; }
 };
 
-//часть напоминания Приоритет
+//С‡Р°СЃС‚СЊ РЅР°РїРѕРјРёРЅР°РЅРёСЏ РџСЂРёРѕСЂРёС‚РµС‚
 class PriorityToDo : public ToDoParts
 {
 	string priority_;
@@ -44,7 +44,7 @@ public:
 	string ToString() override { return priority_; }
 };
 
-//часть напоминания Текст
+//С‡Р°СЃС‚СЊ РЅР°РїРѕРјРёРЅР°РЅРёСЏ РўРµРєСЃС‚
 class NameToDo : public ToDoParts
 {
 	string name_;
@@ -54,10 +54,10 @@ public:
 	string ToString() override { return name_; }
 };
 
-//список напоминаний
+//СЃРїРёСЃРѕРє РЅР°РїРѕРјРёРЅР°РЅРёР№
 class ListToDo
 {
-	list<vector<ToDoParts*>> list_to_do_;    //список напоминаний (основной)
+	list<vector<ToDoParts*>> list_to_do_;    //СЃРїРёСЃРѕРє РЅР°РїРѕРјРёРЅР°РЅРёР№ (РѕСЃРЅРѕРІРЅРѕР№)
 
 public:
 
@@ -93,7 +93,7 @@ public:
 
 };
 
-//строитель списка напоминаний
+//СЃС‚СЂРѕРёС‚РµР»СЊ СЃРїРёСЃРєР° РЅР°РїРѕРјРёРЅР°РЅРёР№
 class Builder
 {
 public:
@@ -105,12 +105,12 @@ public:
 
 };
 
-//создание частей напоминания
+//СЃРѕР·РґР°РЅРёРµ С‡Р°СЃС‚РµР№ РЅР°РїРѕРјРёРЅР°РЅРёСЏ
 class ListToDoBuilder : public Builder
 {
-	vector<ToDoParts*> parts_;             //вектор частей одного напоминания
+	vector<ToDoParts*> parts_;             //РІРµРєС‚РѕСЂ С‡Р°СЃС‚РµР№ РѕРґРЅРѕРіРѕ РЅР°РїРѕРјРёРЅР°РЅРёСЏ
 	ListToDo* list_;
-	list<vector<ToDoParts*>> list_to;      //список напоминаний (промежуточный)
+	list<vector<ToDoParts*>> list_to;      //СЃРїРёСЃРѕРє РЅР°РїРѕРјРёРЅР°РЅРёР№ (РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅС‹Р№)
 public:
 
 	ListToDoBuilder() { reset(); }
@@ -127,7 +127,7 @@ public:
 		string d;
 		gotoxy(5, 7);
 		SetColor(9, 0);
-		cout << "Введите Дату выполнения Дела (формат: мм.дд.гггг): ";
+		cout << "Р’РІРµРґРёС‚Рµ Р”Р°С‚Сѓ РІС‹РїРѕР»РЅРµРЅРёСЏ Р”РµР»Р° (С„РѕСЂРјР°С‚: РјРј.РґРґ.РіРіРіРі): ";
 		SetColor(15, 0);
 		cin >> d;
 		date->set(d);
@@ -139,7 +139,7 @@ public:
 		string t;
 		gotoxy(5, 8);
 		SetColor(9, 0);
-		cout << "Введите ТЕГ (важное, неважное): ";
+		cout << "Р’РІРµРґРёС‚Рµ РўР•Р“ (РІР°Р¶РЅРѕРµ, РЅРµРІР°Р¶РЅРѕРµ): ";
 		SetColor(15, 0);
 		cin >> t;
 		teg->set(t);
@@ -151,7 +151,7 @@ public:
 		string p;
 		gotoxy(5, 9);
 		SetColor(9, 0);
-		cout << "Введите Приоритет (формат времени: чч.мм): ";
+		cout << "Р’РІРµРґРёС‚Рµ РџСЂРёРѕСЂРёС‚РµС‚ (С„РѕСЂРјР°С‚ РІСЂРµРјРµРЅРё: С‡С‡.РјРј): ";
 		SetColor(15, 0);
 		cin >> p;
 		prior->set(p);
@@ -164,7 +164,7 @@ public:
 		gotoxy(5, 10);
 		cin.ignore();
 		SetColor(9, 0);
-		cout << "Введите наименование Дела: ";
+		cout << "Р’РІРµРґРёС‚Рµ РЅР°РёРјРµРЅРѕРІР°РЅРёРµ Р”РµР»Р°: ";
 		char buff[1200];
 		SetColor(15, 0);
 		cin.getline(buff, 1200);
@@ -186,7 +186,7 @@ public:
 	}
 };
 
-//создатель напоминания
+//СЃРѕР·РґР°С‚РµР»СЊ РЅР°РїРѕРјРёРЅР°РЅРёСЏ
 class Create
 {
 	Builder* builder;
