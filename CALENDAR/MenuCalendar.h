@@ -7,7 +7,7 @@
 #include "ChangeToDo.h"
 #include "Function.h"
 
-static map <string, list<vector<ToDoParts*>>> base_to_do_;  //база данных напоминаний
+map <string, list<vector<ToDoParts*>>> base_to_do_;  //база данных напоминаний
 
 class CreateToDo
 {
@@ -17,9 +17,10 @@ class CreateToDo
 	SaveToDo save_;
 	LoadToDo load_;
 
-public:
 
-	map <string, list<vector<ToDoParts*>>> get_base_to_do() { return base_to_do_; }
+public:
+	
+	map <string, list<vector<ToDoParts*>>>& get_base_to_do() { return base_to_do_; }
 	void set_base_to_do(map <string, list<vector<ToDoParts*>>> base) { base_to_do_ = base; }
 
 	//создание напоминания
@@ -240,7 +241,7 @@ public:
 	void search_to()
 	{
 		cr.load_to_do();
-		sr.searchToBase(base_to_do_);
+		sr.searchToBase(cr.get_base_to_do());
 	}
 };
 
@@ -252,7 +253,7 @@ class ChangeToDo
 public:
 	void change_to_do()
 	{
-		ch.change_to(base_to_do_);
+		ch.change_to(cr.get_base_to_do());
 		cr.save_to_do();
 	}
 };
